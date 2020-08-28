@@ -1,4 +1,4 @@
-package com.katyshevtseva.vacationschedule.configuration;
+package com.katyshevtseva.vacationschedule.backend.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

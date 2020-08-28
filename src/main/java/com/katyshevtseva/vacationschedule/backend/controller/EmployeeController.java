@@ -1,9 +1,9 @@
 package com.katyshevtseva.vacationschedule.backend.controller;
 
 import com.katyshevtseva.vacationschedule.backend.mapper.EmployeeMapper;
+import com.katyshevtseva.vacationschedule.backend.model.Employee;
+import com.katyshevtseva.vacationschedule.backend.model.dto.EmployeeDTO;
 import com.katyshevtseva.vacationschedule.backend.service.EmployeeService;
-import com.katyshevtseva.vacationschedule.model.Employee;
-import com.katyshevtseva.vacationschedule.model.dto.EmployeeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

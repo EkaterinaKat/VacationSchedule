@@ -1,9 +1,12 @@
-package com.katyshevtseva.vacationschedule.model;
+package com.katyshevtseva.vacationschedule.backend.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,6 +17,7 @@ public class Employee {
 
     private String fullName;
 
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     private long personnelNumber;
@@ -22,11 +26,17 @@ public class Employee {
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 
+    @Temporal(TemporalType.DATE)
     private Date dateOfEntry;
 
     private String login;
 
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Vacation> vacations;
 
     public static class Builder {
         private Employee employee = new Employee();

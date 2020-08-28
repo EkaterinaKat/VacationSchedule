@@ -1,7 +1,7 @@
 package com.katyshevtseva.vacationschedule.backend.service;
 
+import com.katyshevtseva.vacationschedule.backend.model.Employee;
 import com.katyshevtseva.vacationschedule.backend.repository.EmployeeRepository;
-import com.katyshevtseva.vacationschedule.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

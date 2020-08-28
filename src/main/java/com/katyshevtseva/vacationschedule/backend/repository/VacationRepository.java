@@ -1,6 +1,6 @@
 package com.katyshevtseva.vacationschedule.backend.repository;
 
-import com.katyshevtseva.vacationschedule.model.Vacation;
+import com.katyshevtseva.vacationschedule.backend.model.Vacation;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

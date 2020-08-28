@@ -1,4 +1,4 @@
-package com.katyshevtseva.vacationschedule.model.dto;
+package com.katyshevtseva.vacationschedule.backend.model.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.katyshevtseva.vacationschedule.model;
+package com.katyshevtseva.vacationschedule.backend.model;
 
 import lombok.Data;
 
@@ -16,7 +16,9 @@ public class Vacation {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    private Date startDate; //тип данных timestamp в бд
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
 
+    @Temporal(TemporalType.DATE)
     private Date expirationDate;
 }

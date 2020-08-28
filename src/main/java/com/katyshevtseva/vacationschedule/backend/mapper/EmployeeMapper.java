@@ -1,21 +1,19 @@
 package com.katyshevtseva.vacationschedule.backend.mapper;
 
+import com.katyshevtseva.vacationschedule.backend.model.Employee;
+import com.katyshevtseva.vacationschedule.backend.model.dto.EmployeeDTO;
 import com.katyshevtseva.vacationschedule.backend.repository.PositionRepository;
-import com.katyshevtseva.vacationschedule.model.Employee;
-import com.katyshevtseva.vacationschedule.model.dto.EmployeeDTO;
+import com.katyshevtseva.vacationschedule.backend.util.DateUtil;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 @Component
 public class EmployeeMapper {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     @Autowired
     private ModelMapper mapper;
     @Autowired
@@ -63,19 +61,14 @@ public class EmployeeMapper {
     }
 
     private void mapSpecificFields(Employee source, EmployeeDTO destination) {
-        destination.setBirthDate(dateFormat.format(source.getBirthDate()));
-        destination.setDateOfEntry(dateFormat.format(source.getDateOfEntry()));
+        destination.setBirthDate(DateUtil.dateToString(source.getBirthDate()));
+        destination.setDateOfEntry(DateUtil.dateToString(source.getDateOfEntry()));
         destination.setPositionId(source.getPosition().getId());
     }
 
     private void mapSpecificFields(EmployeeDTO source, Employee destination) {
-        try {
-            destination.setBirthDate(dateFormat.parse(source.getBirthDate()));
-            destination.setDateOfEntry(dateFormat.parse(source.getDateOfEntry()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        destination.setBirthDate(DateUtil.stringToDate(source.getBirthDate()));
+        destination.setDateOfEntry(DateUtil.stringToDate(source.getDateOfEntry()));
         destination.setPosition(positionRepository.findById(source.getPositionId()).orElse(null));
     }
 }

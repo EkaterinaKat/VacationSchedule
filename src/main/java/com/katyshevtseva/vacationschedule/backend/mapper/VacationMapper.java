@@ -1,21 +1,19 @@
 package com.katyshevtseva.vacationschedule.backend.mapper;
 
+import com.katyshevtseva.vacationschedule.backend.model.Vacation;
+import com.katyshevtseva.vacationschedule.backend.model.dto.VacationDTO;
 import com.katyshevtseva.vacationschedule.backend.repository.EmployeeRepository;
-import com.katyshevtseva.vacationschedule.model.Vacation;
-import com.katyshevtseva.vacationschedule.model.dto.VacationDTO;
+import com.katyshevtseva.vacationschedule.backend.util.DateUtil;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 @Component
 public class VacationMapper {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
     @Autowired
     private ModelMapper mapper;
     @Autowired
@@ -64,17 +62,13 @@ public class VacationMapper {
 
     private void mapSpecificFields(Vacation source, VacationDTO destination) {
         destination.setEmployeeId(source.getId());
-        destination.setStartDate(dateFormat.format(source.getStartDate()));
-        destination.setExpirationDate(dateFormat.format(source.getExpirationDate()));
+        destination.setStartDate(DateUtil.dateToString(source.getStartDate()));
+        destination.setExpirationDate(DateUtil.dateToString(source.getExpirationDate()));
     }
 
     private void mapSpecificFields(VacationDTO source, Vacation destination) {
         destination.setEmployee(employeeRepository.findById(source.getId()).orElse(null));
-        try {
-            destination.setStartDate(dateFormat.parse(source.getStartDate()));
-            destination.setExpirationDate(dateFormat.parse(source.getExpirationDate()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        destination.setStartDate(DateUtil.stringToDate(source.getStartDate()));
+        destination.setExpirationDate(DateUtil.stringToDate(source.getExpirationDate()));
     }
 }
