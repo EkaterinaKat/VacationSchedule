@@ -13,7 +13,7 @@ public class EmployeeDTO {
 
     private long personnelNumber;
 
-    private long positionId;
+    private String position;
 
     private String dateOfEntry;
 

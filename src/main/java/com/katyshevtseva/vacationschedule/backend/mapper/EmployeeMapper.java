@@ -32,7 +32,7 @@ public class EmployeeMapper {
         mapper.createTypeMap(Employee.class, EmployeeDTO.class)
                 .addMappings(m -> m.skip(EmployeeDTO::setBirthDate))
                 .addMappings(m -> m.skip(EmployeeDTO::setDateOfEntry))
-                .addMappings(m -> m.skip(EmployeeDTO::setPositionId))
+                .addMappings(m -> m.skip(EmployeeDTO::setPosition))
                 .setPostConverter(toDtoConverter());
 
         mapper.createTypeMap(EmployeeDTO.class, Employee.class)
@@ -63,12 +63,12 @@ public class EmployeeMapper {
     private void mapSpecificFields(Employee source, EmployeeDTO destination) {
         destination.setBirthDate(DateUtil.dateToString(source.getBirthDate()));
         destination.setDateOfEntry(DateUtil.dateToString(source.getDateOfEntry()));
-        destination.setPositionId(source.getPosition().getId());
+        destination.setPosition(source.getPosition().getTitle());
     }
 
     private void mapSpecificFields(EmployeeDTO source, Employee destination) {
         destination.setBirthDate(DateUtil.stringToDate(source.getBirthDate()));
         destination.setDateOfEntry(DateUtil.stringToDate(source.getDateOfEntry()));
-        destination.setPosition(positionRepository.findById(source.getPositionId()).orElse(null));
+        destination.setPosition(positionRepository.findByTitle(source.getPosition()).get());
     }
 }
