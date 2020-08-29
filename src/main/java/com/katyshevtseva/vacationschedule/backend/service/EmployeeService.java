@@ -22,7 +22,8 @@ public class EmployeeService {
 
     public Employee getEmployeeById(long employeeId) throws EntityAccessException {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
-        employee.orElseThrow(EntityAccessException::new);
+        if (!employee.isPresent())
+            throw new EntityAccessException(ExceptionMessage.NOT_FOUND);
 
         return employee.get();
     }
