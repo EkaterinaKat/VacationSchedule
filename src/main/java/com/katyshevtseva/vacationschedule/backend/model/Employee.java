@@ -37,47 +37,4 @@ public class Employee {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Vacation> vacations;
-
-    public static class Builder {
-        private Employee employee = new Employee();
-
-        public Employee.Builder setFullName(String fullName) {
-            employee.setFullName(fullName);
-            return this;
-        }
-
-        public Employee.Builder setBirthDate(Date birthDate) {
-            employee.setBirthDate(birthDate);
-            return this;
-        }
-
-        public Employee.Builder setPersonnelNumber(Long personnelNumber) {
-            employee.setPersonnelNumber(personnelNumber);
-            return this;
-        }
-
-        public Employee.Builder setPositon(Position position) {
-            employee.setPosition(position);
-            return this;
-        }
-
-        public Employee.Builder setDateOfEntry(Date dateOfEntry) {
-            employee.setDateOfEntry(dateOfEntry);
-            return this;
-        }
-
-        public Employee.Builder setLogin(String login) {
-            employee.setLogin(login);
-            return this;
-        }
-
-        public Employee.Builder setPassword(String password) {
-            employee.setPassword(password);
-            return this;
-        }
-
-        public Employee get() {
-            return employee;
-        }
-    }
 }
