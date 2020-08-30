@@ -6,7 +6,6 @@ import com.katyshevtseva.vacationschedule.backend.exeption.ExceptionMessage;
 import com.katyshevtseva.vacationschedule.backend.model.Vacation;
 import com.katyshevtseva.vacationschedule.backend.repository.VacationRepository;
 import com.katyshevtseva.vacationschedule.backend.request.VacationSearchRequest;
-import com.katyshevtseva.vacationschedule.backend.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,14 +52,12 @@ public class VacationService {
     }
 
     public List<Vacation> getVacationsBySearchRequest(VacationSearchRequest request) throws EntityAccessException {
-        Date beginningDate = DateUtil.stringToDate(request.getBeginningDate());
-        Date endDate = DateUtil.stringToDate(request.getEndDate());
 
-        if (!periodIsCorrect(beginningDate, endDate))
+        if (!periodIsCorrect(request.getBeginningDate(), request.getEndDate()))
             throw new EntityAccessException(ExceptionMessage.INCORRECT_DATES);
 
         List<Vacation> allVacations = (List<Vacation>) vacationRepository.findAll();
-        List<Vacation> filteredByDate = filerByDate(allVacations, beginningDate, endDate);
+        List<Vacation> filteredByDate = filerByDate(allVacations, request.getBeginningDate(), request.getEndDate());
         List<Vacation> filteredByDateAndEmployee = filterByEmployeeId(filteredByDate, request.getEmployeeIds());
 
         return filteredByDateAndEmployee;
