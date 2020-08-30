@@ -1,12 +1,9 @@
 package com.katyshevtseva.vacationschedule.backend.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -22,8 +19,7 @@ public class Employee {
 
     private long personnelNumber;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "position_id", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Position position;
 
     @Temporal(TemporalType.DATE)
@@ -32,9 +28,4 @@ public class Employee {
     private String login;
 
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<Vacation> vacations;
 }

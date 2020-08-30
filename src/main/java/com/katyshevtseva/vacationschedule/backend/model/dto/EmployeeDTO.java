@@ -1,6 +1,9 @@
 package com.katyshevtseva.vacationschedule.backend.model.dto;
 
+import com.katyshevtseva.vacationschedule.backend.model.Position;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class EmployeeDTO {
@@ -9,13 +12,13 @@ public class EmployeeDTO {
 
     private String fullName;
 
-    private String birthDate;
+    private Date birthDate;
 
     private long personnelNumber;
 
-    private String position;
+    private Position position;
 
-    private String dateOfEntry;
+    private Date dateOfEntry;
 
     private String login;
 

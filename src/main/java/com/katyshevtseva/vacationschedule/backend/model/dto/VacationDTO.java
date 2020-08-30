@@ -2,14 +2,16 @@ package com.katyshevtseva.vacationschedule.backend.model.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class VacationDTO {
 
     private long id;
 
-    private long employeeId;
+    private EmployeeDTO employeeDTO;
 
-    private String startDate;
+    private Date startDate;
 
-    private String expirationDate;
+    private Date expirationDate;
 }

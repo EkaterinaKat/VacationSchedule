@@ -2,8 +2,6 @@ package com.katyshevtseva.vacationschedule.backend.mapper;
 
 import com.katyshevtseva.vacationschedule.backend.model.Vacation;
 import com.katyshevtseva.vacationschedule.backend.model.dto.VacationDTO;
-import com.katyshevtseva.vacationschedule.backend.repository.EmployeeRepository;
-import com.katyshevtseva.vacationschedule.backend.util.DateUtil;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ public class VacationMapper {
     @Autowired
     private ModelMapper mapper;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeMapper employeeMapper;
 
     public Vacation toEntity(VacationDTO dto) {
         return Objects.isNull(dto) ? null : mapper.map(dto, Vacation.class);
@@ -30,15 +28,11 @@ public class VacationMapper {
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Vacation.class, VacationDTO.class)
-                .addMappings(m -> m.skip(VacationDTO::setEmployeeId))
-                .addMappings(m -> m.skip(VacationDTO::setStartDate))
-                .addMappings(m -> m.skip(VacationDTO::setExpirationDate))
+                .addMappings(m -> m.skip(VacationDTO::setEmployeeDTO))
                 .setPostConverter(toDtoConverter());
 
         mapper.createTypeMap(VacationDTO.class, Vacation.class)
                 .addMappings(m -> m.skip(Vacation::setEmployee))
-                .addMappings(m -> m.skip(Vacation::setStartDate))
-                .addMappings(m -> m.skip(Vacation::setExpirationDate))
                 .setPostConverter(toEntityConverter());
     }
 
@@ -61,14 +55,10 @@ public class VacationMapper {
     }
 
     private void mapSpecificFields(Vacation source, VacationDTO destination) {
-        destination.setEmployeeId(source.getId());
-        destination.setStartDate(DateUtil.dateToString(source.getStartDate()));
-        destination.setExpirationDate(DateUtil.dateToString(source.getExpirationDate()));
+        destination.setEmployeeDTO(employeeMapper.toDto(source.getEmployee()));
     }
 
     private void mapSpecificFields(VacationDTO source, Vacation destination) {
-        destination.setEmployee(employeeRepository.findById(source.getId()).orElse(null));
-        destination.setStartDate(DateUtil.stringToDate(source.getStartDate()));
-        destination.setExpirationDate(DateUtil.stringToDate(source.getExpirationDate()));
+        destination.setEmployee(employeeMapper.toEntity(source.getEmployeeDTO()));
     }
 }
